@@ -29,8 +29,16 @@ namespace TestClient
 
                 //Send Message
                 byte[] sendBuffer = Encoding.UTF8.GetBytes(message);
-                stream.Write(sendBuffer, 0, sendBuffer.Length);
-                Console.WriteLine($">> YOU: {message}");
+                try{
+                    stream.Write(sendBuffer, 0, sendBuffer.Length);
+                    Console.WriteLine($">> YOU: {message}");
+                }
+                catch(Exception ex)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Server Disconnected!");
+                    break;
+                }
 
                 //Receive Message
                 byte[] receiveBuffer = new byte[1024];

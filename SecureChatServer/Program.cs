@@ -38,14 +38,27 @@ namespace SecureChatServer
             //Send message
             string message = "Is anybody there?";
             byte[] sendBuffer = Encoding.UTF8.GetBytes(message);
-            Console.WriteLine($">> YOU: {message}");
-            stream.Write(sendBuffer, 0, sendBuffer.Length);
+            try
+            {
+                stream.Write(sendBuffer, 0, sendBuffer.Length);
+                Console.WriteLine($">> YOU: {message}");
+            }
+            catch(Exception ex)
+            {
+                Console.Clear();
+                Console.WriteLine("CLIENT DISCONNECTED!");
+                return;
+            }
 
             //Receive message
             byte[] receiveBuffer = new byte[1024];
-            int bytesReceived = stream.Read(receiveBuffer, 0, receiveBuffer.Length);
-            string data = Encoding.UTF8.GetString(receiveBuffer, 0, bytesReceived);
-            Console.WriteLine($">> CLIENT: {data}");
+            int bytesRead = stream.Read(receiveBuffer, 0, receiveBuffer.Length);
+            if(bytesRead == 0)
+            {
+                return;
+            }
+            string response = Encoding.UTF8.GetString(receiveBuffer, 0, bytesRead);
+            Console.WriteLine($">> CLIENT: {response}");
         }
     }
 }
