@@ -12,18 +12,19 @@ namespace SecureChatServer
         static TcpListener listener;
         public static void Main(string[] args)
         {
+            Console.WriteLine("<<<<< SERVER >>>>>");
+            Console.WriteLine(">> WAITING FOR A CONNECTION...");
             int port = 5011;
             listener = new TcpListener(IPAddress.Any, port);
             listener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             listener.Start();
             while (true)
             {
-                //Trazi klijenta
-                Console.Write("Waiting for a connection...");
+                //Looking for client
                 TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine("Connected!");
+                Console.WriteLine(">> CONNECTED");
 
-                //Startuj Thread da handluje klijenta
+                //Handle client with thread
                 Thread t = new Thread(HandleClient);
                 t.Start(client);
             }
@@ -34,19 +35,17 @@ namespace SecureChatServer
             TcpClient client = (TcpClient)obj;
             NetworkStream stream = client.GetStream();
 
-            //Posalji poruku
-            byte[] sendBuffer = Encoding.UTF8.GetBytes("Is anybody there?");
+            //Send message
+            string message = "Is anybody there?";
+            byte[] sendBuffer = Encoding.UTF8.GetBytes(message);
+            Console.WriteLine($">> YOU: {message}");
             stream.Write(sendBuffer, 0, sendBuffer.Length);
 
-            //Primaj poruku
+            //Receive message
             byte[] receiveBuffer = new byte[1024];
             int bytesReceived = stream.Read(receiveBuffer, 0, receiveBuffer.Length);
             string data = Encoding.UTF8.GetString(receiveBuffer, 0, bytesReceived);
-
-            string response = "Poruka primljena!";
-            byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
-            stream.Write(responseBuffer, 0, responseBuffer.Length);
-
+            Console.WriteLine($">> CLIENT: {data}");
         }
     }
 }
