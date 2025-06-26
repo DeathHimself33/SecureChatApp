@@ -1,0 +1,6 @@
+D:\Main Folder\IT\Samostalno\SecureChatApp\TestClient\bin\Debug\TestClient.exe.config
+D:\Main Folder\IT\Samostalno\SecureChatApp\TestClient\bin\Debug\TestClient.exe
+D:\Main Folder\IT\Samostalno\SecureChatApp\TestClient\bin\Debug\TestClient.pdb
+D:\Main Folder\IT\Samostalno\SecureChatApp\TestClient\obj\Debug\TestClient.csprojAssemblyReference.cache
+D:\Main Folder\IT\Samostalno\SecureChatApp\TestClient\obj\Debug\TestClient.exe
+D:\Main Folder\IT\Samostalno\SecureChatApp\TestClient\obj\Debug\TestClient.pdb

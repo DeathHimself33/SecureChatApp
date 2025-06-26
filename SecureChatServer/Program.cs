@@ -12,8 +12,9 @@ namespace SecureChatServer
         static TcpListener listener;
         public static void Main(string[] args)
         {
-            int port = 5000;
+            int port = 5011;
             listener = new TcpListener(IPAddress.Any, port);
+            listener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             listener.Start();
             while (true)
             {
@@ -41,6 +42,11 @@ namespace SecureChatServer
             byte[] receiveBuffer = new byte[1024];
             int bytesReceived = stream.Read(receiveBuffer, 0, receiveBuffer.Length);
             string data = Encoding.UTF8.GetString(receiveBuffer, 0, bytesReceived);
+
+            string response = "Poruka primljena!";
+            byte[] responseBuffer = Encoding.UTF8.GetBytes(response);
+            stream.Write(responseBuffer, 0, responseBuffer.Length);
+
         }
     }
 }
